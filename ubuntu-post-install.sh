@@ -1,11 +1,25 @@
 #!/bin/bash
+# 
+#			** W I P ** 
+# 
 #
 # Author: Jamie McGowan
 # Description: Post installation script for Ubuntu
 #
 # DELETE ANY NOTES WHEN FINISHED
 # Notes: 
-# Universe repository:		sudo add-apt-repository universe
+# 	Functions to add:
+#		Install favorite apps
+#		Install .debs like chrome, etc... sublime,......
+#		Install numix theme and icons
+#		gsettings set org.gnome.desktop.interface gtk-theme "Numix Daily"
+#		Change Icon-Theme:
+#		gsettings set org.gnome.desktop.interface icon-theme 'Numix-Circle'
+#		Change Window-Theme:		
+# 		gsettings set org.gnome.desktop.wm.preferences theme "Numix Daily"
+#
+#
+
 
 tabs 4	# set tab width
 clear 	# clear the screen
@@ -16,13 +30,13 @@ echo "			Jamie Mc Gowan	 			"
 echo "#------------------------------------#"
 
 function main {
-	echo
-	echo "What would you like to do?"
 	echo ""
-	echo "1	Enable Universe (community maintained) repository"
-	echo "2	Update and Upgrade System"
-	echo "3	"
-	echo "Q	Quit"
+	echo "What would you like to do?"
+	echo "	1	Enable Universe (community maintained) repository"
+	echo "	2	Update and Upgrade System"
+	echo "	3	Install Codecs"
+	echo "	4	Switch to Numix themes"
+	echo "	Q	Quit"
 	echo ""
 
 	echo "Enter your choice: " && read cmd
@@ -30,6 +44,10 @@ function main {
 		universe
 	elif [[ $cmd == "2" ]]; then
 		upgrade
+	elif [[ $cmd == "3" ]]; then
+		codecs
+	elif [[ $cmd == "4" ]]; then
+		theme
 	elif [[ $cmd == "Q" ]]; then
 		exit
 	else
@@ -37,6 +55,26 @@ function main {
 		echo "I did not understand that. Try again"
 		main
 	fi
+}
+
+function codecs {
+	echo ""
+	echo "Installing Ubuntu Restricted Extras"
+	echo "Requires root privileges"
+	sudo apt-get install -y ubuntu-restricted-extras
+	main
+}
+
+function theme {
+	echo ""
+	echo "Changing the Icon theme to:				Numix-Circle"
+	gsettings set org.gnome.desktop.interface icon-theme 'Numix-Circle'
+	echo "Changing the GTK theme to:				Numix-Daily"
+	gsettings set org.gnome.desktop.interface gtk-theme "Numix Daily"
+	echo "Changing the Window Decoration theme to:	Numix-Daily"
+	gsettings set org.gnome.desktop.wm.preferences theme "Numix Daily"
+	echo "Finished changing themes"
+	main
 }
 
 function universe {
