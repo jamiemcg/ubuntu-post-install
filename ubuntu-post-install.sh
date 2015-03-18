@@ -67,6 +67,13 @@ function codecs {
 
 function theme {
 	echo ""
+
+	#Ensure the themes are install
+	echo "Installing/Upgrading Numix themes"
+	sudo apt-add-repository -y ppa:numix/ppa
+	sudo apt-get install numix-icon-theme-circle numix-gtk-theme
+	sudo apt-get update
+
 	echo "Changing the Icon theme to:				Numix-Circle"
 	gsettings set org.gnome.desktop.interface icon-theme 'Numix-Circle'
 	echo "Changing the GTK theme to:				Numix-Daily"
