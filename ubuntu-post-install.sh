@@ -11,7 +11,6 @@
 # 	Functions to add:
 #		Install favorite apps
 #		Install .debs like chrome, etc... sublime,......
-#		Install numix theme and icons
 #		gsettings set org.gnome.desktop.interface gtk-theme "Numix Daily"
 #		Change Icon-Theme:
 #		gsettings set org.gnome.desktop.interface icon-theme 'Numix-Circle'
@@ -69,17 +68,34 @@ function theme {
 	echo ""
 
 	#Ensure the themes are install
-	echo "Installing/Upgrading Numix themes"
-	sudo apt-add-repository -y ppa:numix/ppa
-	sudo apt-get install numix-icon-theme-circle numix-gtk-theme
-	sudo apt-get update
+	echo "Have you added the Numix Repository and installed the themes? (Y)es, (N)o:"
+	read REPLY
+	case $REPLY in
+		[Nn]* )
+			echo "Okay I will do that for you!"
+			echo "Installing/Upgrading Numix themes"
+			echo ""
+			sudo apt-add-repository -y ppa:numix/ppa
+			sudo apt-get install numix-icon-theme-circle numix-gtk-theme
+			sudo apt-get update
+			;;
+		[Yy]* )
+			;;
+		* )
+			echo "Sorry I didn't understand that, try again"
+			theme
+			;;
+	esac		
 
+	echo ""
 	echo "Changing the Icon theme to:				Numix-Circle"
 	gsettings set org.gnome.desktop.interface icon-theme 'Numix-Circle'
 	echo "Changing the GTK theme to:				Numix-Daily"
 	gsettings set org.gnome.desktop.interface gtk-theme "Numix Daily"
 	echo "Changing the Window Decoration theme to:	Numix-Daily"
 	gsettings set org.gnome.desktop.wm.preferences theme "Numix Daily"
+	
+	echo ""
 	echo "Finished changing themes"
 	main
 }
